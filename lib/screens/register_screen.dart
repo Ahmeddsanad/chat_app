@@ -1,10 +1,116 @@
+import 'package:chat_app/components/TextItem.dart';
+import 'package:chat_app/components/buttonItem.dart';
+import 'package:chat_app/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 
 class RegisterScreen extends StatelessWidget {
-  const RegisterScreen({super.key});
+  RegisterScreen({super.key});
+
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+      backgroundColor: Colors.teal,
+      body: Center(
+        child: Column(
+          children: [
+            const Spacer(
+              flex: 3,
+            ),
+            Image.asset('assets/images/scholar.png'),
+            const Text(
+              'Scholar Chat',
+              style: TextStyle(
+                fontFamily: 'Pacifico',
+                color: Colors.white,
+                fontSize: 32.0,
+              ),
+            ),
+            const Spacer(
+              flex: 2,
+            ),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 24.0),
+              child: Row(
+                children: [
+                  Text(
+                    'REGISTER',
+                    style: TextStyle(
+                      fontFamily: 'RobotoCondensed',
+                      color: Colors.white,
+                      fontSize: 32.0,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Spacer(),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24.0),
+              child: TextItem(
+                text: 'Email',
+                controller: emailController,
+              ),
+            ),
+            SizedBox(
+              height: 15.0,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24.0),
+              child: TextItem(
+                text: 'Password',
+                controller: passwordController,
+              ),
+            ),
+            const Spacer(
+              flex: 1,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24.0),
+              child: ButtonItem(
+                  function: () {},
+                  text: 'Register',
+                  horizontalSymmetric: 140.0),
+            ),
+            const Spacer(
+              flex: 1,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text(
+                  'already have an account?',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18.0,
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(context, MaterialPageRoute(
+                      builder: (context) {
+                        return LoginScreen();
+                      },
+                    ));
+                  },
+                  child: const Text(
+                    ' Login',
+                    style: TextStyle(
+                      color: Color(0xffc7ede6),
+                      fontSize: 18.0,
+                    ),
+                  ),
+                )
+              ],
+            ),
+            const Spacer(
+              flex: 9,
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

@@ -5,12 +5,13 @@ import 'package:flutter/material.dart';
 Widget ButtonItem({
   required Function function,
   required String text,
+  required double horizontalSymmetric,
 }) =>
     ElevatedButton(
       style: TextButton.styleFrom(
         backgroundColor: Colors.teal[700],
-        padding: const EdgeInsets.symmetric(
-          horizontal: 150.0,
+        padding: EdgeInsets.symmetric(
+          horizontal: horizontalSymmetric,
           vertical: 12,
         ),
       ),

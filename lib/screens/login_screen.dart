@@ -70,9 +70,7 @@ class LoginScreen extends StatelessWidget {
               flex: 1,
             ),
             ButtonItem(
-              function: () {},
-              text: 'Login',
-            ),
+                function: () {}, text: 'Login', horizontalSymmetric: 150.0),
             const Spacer(
               flex: 1,
             ),
