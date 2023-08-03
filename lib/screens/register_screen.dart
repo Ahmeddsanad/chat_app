@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:chat_app/components/TextItem.dart';
 import 'package:chat_app/components/buttonItem.dart';
 import 'package:chat_app/screens/login_screen.dart';
@@ -46,7 +48,9 @@ class RegisterScreen extends StatelessWidget {
                 ],
               ),
             ),
-            Spacer(),
+            const SizedBox(
+              height: 15.0,
+            ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24.0),
               child: TextItem(
@@ -89,11 +93,7 @@ class RegisterScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () {
-                    Navigator.push(context, MaterialPageRoute(
-                      builder: (context) {
-                        return LoginScreen();
-                      },
-                    ));
+                    Navigator.pop(context);
                   },
                   child: const Text(
                     ' Login',

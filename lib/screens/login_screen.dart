@@ -1,4 +1,4 @@
-// ignore_for_file: unnecessary_string_interpolations
+// ignore_for_file: unnecessary_string_interpolations, must_be_immutable
 
 import 'package:chat_app/components/TextItem.dart';
 import 'package:chat_app/components/buttonItem.dart';
@@ -48,7 +48,9 @@ class LoginScreen extends StatelessWidget {
                 ],
               ),
             ),
-            Spacer(),
+            const SizedBox(
+              height: 15.0,
+            ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24.0),
               child: TextItem(
@@ -86,11 +88,7 @@ class LoginScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () {
-                    Navigator.push(context, MaterialPageRoute(
-                      builder: (context) {
-                        return RegisterScreen();
-                      },
-                    ));
+                    Navigator.pushNamed(context, 'RegisterScreen');
                   },
                   child: const Text(
                     ' Register',
