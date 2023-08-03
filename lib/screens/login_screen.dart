@@ -2,11 +2,14 @@
 
 import 'package:chat_app/components/TextItem.dart';
 import 'package:chat_app/components/buttonItem.dart';
+import 'package:chat_app/constant.dart';
 import 'package:chat_app/screens/register_screen.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
+
+  String id = 'LoginScreen';
 
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -14,7 +17,7 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.teal,
+      backgroundColor: kPrimaryColor,
       body: Center(
         child: Column(
           children: [
@@ -88,7 +91,7 @@ class LoginScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () {
-                    Navigator.pushNamed(context, 'RegisterScreen');
+                    Navigator.pushNamed(context, RegisterScreen.id);
                   },
                   child: const Text(
                     ' Register',
