@@ -19,125 +19,139 @@ class RegisterScreen extends StatelessWidget {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
+  GlobalKey<FormState> formKey = GlobalKey();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: kPrimaryColor,
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
-        child: Center(
-          child: Column(
-            children: [
-              const SizedBox(
-                height: 75.0,
-              ),
-              Image.asset('assets/images/scholar.png'),
-              const Text(
-                'Scholar Chat',
-                style: TextStyle(
-                  fontFamily: 'Pacifico',
-                  color: Colors.white,
-                  fontSize: 32.0,
+        child: Form(
+          key: formKey,
+          child: Center(
+            child: Column(
+              children: [
+                const SizedBox(
+                  height: 75.0,
                 ),
-              ),
-              const SizedBox(
-                height: 75.0,
-              ),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 24.0),
-                child: Row(
-                  children: [
-                    Text(
-                      'REGISTER',
-                      style: TextStyle(
-                        fontFamily: 'RobotoCondensed',
-                        color: Colors.white,
-                        fontSize: 32.0,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(
-                height: 15.0,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                child: TextItem(
-                    text: 'Email',
-                    // controller: emailController,
-                    onChanged: (data) {
-                      email = data;
-                    }),
-              ),
-              const SizedBox(
-                height: 15.0,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                child: TextItem(
-                    text: 'Password',
-                    // controller: passwordController,
-                    onChanged: (data) {
-                      password = data;
-                    }),
-              ),
-              const SizedBox(
-                height: 20.0,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                child: ButtonItem(
-                    function: () async {
-                      try {
-                        var auth = FirebaseAuth.instance;
-
-                        UserCredential user = await RegisterUser(auth);
-
-                        // print(user.user!.displayName);
-                      } on FirebaseAuthException catch (ex) {
-                        print(ex);
-
-                        if (ex.code == 'weak-password') {
-                          ShowSnakeBar(context, 'weak password.');
-                        } else if (ex.code == 'email-already-in-use') {
-                          ShowSnakeBar(context, 'The email already exists.');
-                        }
-                      }
-
-                      ShowSnakeBar(context, 'Success.');
-                    },
-                    text: 'Register',
-                    horizontalSymmetric: 140.0),
-              ),
-              const SizedBox(
-                height: 15.0,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text(
-                    'already have an account?',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18.0,
-                    ),
+                Image.asset('assets/images/scholar.png'),
+                const Text(
+                  'Scholar Chat',
+                  style: TextStyle(
+                    fontFamily: 'Pacifico',
+                    color: Colors.white,
+                    fontSize: 32.0,
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                    child: const Text(
-                      ' Login',
+                ),
+                const SizedBox(
+                  height: 75.0,
+                ),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 24.0),
+                  child: Row(
+                    children: [
+                      Text(
+                        'REGISTER',
+                        style: TextStyle(
+                          fontFamily: 'RobotoCondensed',
+                          color: Colors.white,
+                          fontSize: 32.0,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(
+                  height: 15.0,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                  child: TextItem(
+                      text: 'Email',
+                      // controller: emailController,
+                      onChanged: (data) {
+                        email = data;
+                      },
+                      validator: (data) {
+                        if (data!.isEmpty) {
+                          return 'email must be filled';
+                        }
+                      }),
+                ),
+                const SizedBox(
+                  height: 15.0,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                  child: TextItem(
+                      validator: (data) {
+                        return 'password must be filled';
+                      },
+                      text: 'Password',
+                      // controller: passwordController,
+                      onChanged: (data) {
+                        password = data;
+                      }),
+                ),
+                const SizedBox(
+                  height: 20.0,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                  child: ButtonItem(
+                      function: () async {
+                        if (formKey.currentState!.validate()) {
+                          try {
+                            UserCredential user = await RegisterUser();
+
+                            // print(user.user!.displayName);
+                          } on FirebaseAuthException catch (ex) {
+                            print(ex);
+
+                            if (ex.code == 'weak-password') {
+                              ShowSnakeBar(context, 'weak password.');
+                            } else if (ex.code == 'email-already-in-use') {
+                              ShowSnakeBar(
+                                  context, 'The email already exists.');
+                            }
+                          }
+                        }
+
+                        ShowSnakeBar(context, 'Success.');
+                      },
+                      text: 'Register',
+                      horizontalSymmetric: 140.0),
+                ),
+                const SizedBox(
+                  height: 15.0,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text(
+                      'already have an account?',
                       style: TextStyle(
-                        color: Color(0xffc7ede6),
+                        color: Colors.white,
                         fontSize: 18.0,
                       ),
                     ),
-                  )
-                ],
-              ),
-            ],
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: const Text(
+                        ' Login',
+                        style: TextStyle(
+                          color: Color(0xffc7ede6),
+                          fontSize: 18.0,
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -154,8 +168,9 @@ class RegisterScreen extends StatelessWidget {
     );
   }
 
-  Future<UserCredential> RegisterUser(FirebaseAuth auth) async {
-    UserCredential user = await auth.createUserWithEmailAndPassword(
+  Future<UserCredential> RegisterUser() async {
+    UserCredential user =
+        await FirebaseAuth.instance.createUserWithEmailAndPassword(
       email: email!,
       password: password!,
     );
