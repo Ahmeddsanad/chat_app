@@ -64,7 +64,9 @@ class LoginScreen extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 24.0),
                   child: TextItem(
                     validator: (data) {
-                      return 'email must be filled';
+                      if (data!.isEmpty) {
+                        return 'email must be filled';
+                      }
                     },
                     text: 'Email',
                     controller: emailController,
@@ -77,7 +79,9 @@ class LoginScreen extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 24.0),
                   child: TextItem(
                     validator: (data) {
-                      return 'password must be filled';
+                      if (data!.isEmpty) {
+                        return 'password must be filled';
+                      }
                     },
                     text: 'Password',
                     controller: passwordController,

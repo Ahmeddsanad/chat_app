@@ -11,6 +11,15 @@ Widget TextItem({
     validator: validator,
     controller: controller,
     decoration: InputDecoration(
+      focusedErrorBorder: OutlineInputBorder(
+        borderSide: const BorderSide(
+          color: Colors.white,
+          width: 2.0,
+        ),
+        borderRadius: BorderRadius.circular(
+          12.0,
+        ),
+      ),
       errorBorder: OutlineInputBorder(
         borderSide: const BorderSide(
           color: Colors.white,
