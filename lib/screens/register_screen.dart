@@ -92,34 +92,20 @@ class RegisterScreen extends StatelessWidget {
                       try {
                         var auth = FirebaseAuth.instance;
 
-                        UserCredential user =
-                            await auth.createUserWithEmailAndPassword(
-                          email: email!,
-                          password: password!,
-                        );
+                        UserCredential user = await RegisterUser(auth);
 
-                        print(user.user!.displayName);
+                        // print(user.user!.displayName);
                       } on FirebaseAuthException catch (ex) {
                         print(ex);
 
                         if (ex.code == 'weak-password') {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text(
-                                'The password provided is too weak.',
-                              ),
-                            ),
-                          );
+                          ShowSnakeBar(context, 'weak password.');
                         } else if (ex.code == 'email-already-in-use') {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text(
-                                'The email already exists.',
-                              ),
-                            ),
-                          );
+                          ShowSnakeBar(context, 'The email already exists.');
                         }
                       }
+
+                      ShowSnakeBar(context, 'Success.');
                     },
                     text: 'Register',
                     horizontalSymmetric: 140.0),
@@ -156,5 +142,23 @@ class RegisterScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void ShowSnakeBar(BuildContext context, String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          '$message',
+        ),
+      ),
+    );
+  }
+
+  Future<UserCredential> RegisterUser(FirebaseAuth auth) async {
+    UserCredential user = await auth.createUserWithEmailAndPassword(
+      email: email!,
+      password: password!,
+    );
+    return user;
   }
 }
