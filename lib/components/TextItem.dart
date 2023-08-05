@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 
-Widget TextItem(
-    {required String text, required TextEditingController controller}) {
+Widget TextItem({
+  required String text,
+  TextEditingController? controller,
+  Function(String)? onChanged,
+}) {
   return TextField(
+    onChanged: onChanged,
     controller: controller,
     decoration: InputDecoration(
       enabledBorder: OutlineInputBorder(

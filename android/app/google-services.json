@@ -29,6 +29,13 @@
             {
               "client_id": "976904436839-qolha81jeqd8kbhja9bq3mcsgl00rsdv.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "976904436839-j297naahjoiuk1gup5b4c7l88odshf1i.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.chatApp.RunnerTests"
+              }
             }
           ]
         }

@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 
 Widget ButtonItem({
-  required Function function,
+  required VoidCallback function,
   required String text,
   required double horizontalSymmetric,
 }) =>
@@ -15,7 +15,7 @@ Widget ButtonItem({
           vertical: 12,
         ),
       ),
-      onPressed: () {},
+      onPressed: function,
       child: Text(
         '$text',
         style: const TextStyle(
