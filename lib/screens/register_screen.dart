@@ -2,7 +2,9 @@
 
 import 'package:chat_app/components/TextItem.dart';
 import 'package:chat_app/components/buttonItem.dart';
+import 'package:chat_app/components/show_snake_bar.dart';
 import 'package:chat_app/constant.dart';
+import 'package:chat_app/screens/chat_screen.dart';
 import 'package:chat_app/screens/login_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -47,7 +49,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   const SizedBox(
                     height: 75.0,
                   ),
-                  Image.asset('assets/images/scholar.png'),
+                  Image.asset(kLogo),
                   const Text(
                     'Scholar Chat',
                     style: TextStyle(
@@ -123,6 +125,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             try {
                               UserCredential user = await RegisterUser();
                               ShowSnakeBar(context, 'Success.');
+                              Navigator.pushNamed(context, ChatScreen.id);
+
                               // print(user.user!.displayName);
                             } on FirebaseAuthException catch (ex) {
                               print(ex);
@@ -173,16 +177,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
             ),
           ),
-        ),
-      ),
-    );
-  }
-
-  void ShowSnakeBar(BuildContext context, String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-          '$message',
         ),
       ),
     );
