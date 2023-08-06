@@ -21,11 +21,44 @@ class ChatScreen extends StatelessWidget {
           ],
         ),
       ),
-      body: ListView.builder(
-        physics: const BouncingScrollPhysics(),
-        itemBuilder: (context, index) => SizedBox(
-          child: ChatBubble(),
-        ),
+      body: Column(
+        children: [
+          Expanded(
+            child: ListView.builder(
+              physics: const BouncingScrollPhysics(),
+              itemBuilder: (context, index) => SizedBox(
+                child: ChatBubble(),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: TextFormField(
+              decoration: InputDecoration(
+                  hintText: 'Send Message',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(
+                      16.0,
+                    ),
+                    borderSide: BorderSide(
+                      color: kPrimaryColor,
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(
+                      24.0,
+                    ),
+                    borderSide: BorderSide(
+                      color: Colors.teal,
+                    ),
+                  ),
+                  suffixIcon: Icon(
+                    Icons.send,
+                    color: Colors.teal,
+                  )),
+            ),
+          ),
+        ],
       ),
     );
   }
