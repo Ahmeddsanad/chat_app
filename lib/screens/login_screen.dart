@@ -2,7 +2,9 @@
 
 import 'package:chat_app/components/TextItem.dart';
 import 'package:chat_app/components/buttonItem.dart';
+import 'package:chat_app/components/show_snake_bar.dart';
 import 'package:chat_app/constant.dart';
+import 'package:chat_app/screens/chat_screen.dart';
 import 'package:chat_app/screens/register_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -11,13 +13,13 @@ import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 class LoginScreen extends StatefulWidget {
   LoginScreen({super.key});
 
+  static String id = 'LoginScreen';
+
   @override
   State<LoginScreen> createState() => _LoginScreenState();
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  String id = 'LoginScreen';
-
   TextEditingController emailController = TextEditingController();
 
   TextEditingController passwordController = TextEditingController();
@@ -46,7 +48,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   const SizedBox(
                     height: 75.0,
                   ),
-                  Image.asset('assets/images/scholar.png'),
+                  Image.asset(kLogo),
                   const Text(
                     'Scholar Chat',
                     style: TextStyle(
@@ -119,15 +121,30 @@ class _LoginScreenState extends State<LoginScreen> {
                             isLoading = true;
                           });
 
-                          UserCredential user = await FirebaseAuth.instance
-                              .signInWithEmailAndPassword(
-                            email: email!,
-                            password: password!,
-                          );
+                          try {
+                            UserCredential user = await FirebaseAuth.instance
+                                .signInWithEmailAndPassword(
+                              email: email!,
+                              password: password!,
+                            );
+
+                            Navigator.pushNamed(context, ChatScreen.id);
+
+                            // print('login success');
+                          } on FirebaseAuthException catch (e) {
+                            print(e);
+
+                            if (e.code == 'user-not-found') {
+                              ShowSnakeBar(
+                                  context, 'No user found for that email.');
+                            } else if (e.code == 'wrong-password') {
+                              ShowSnakeBar(context, 'Wrong password');
+                            }
+                          }
+
                           setState(() {
                             isLoading = false;
                           });
-                          print('login success');
                         }
                       },
                       text: 'Login',
