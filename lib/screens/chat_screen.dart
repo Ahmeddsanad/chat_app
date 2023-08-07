@@ -19,12 +19,12 @@ class ChatScreen extends StatelessWidget {
 
   static String id = 'ChatScreen';
 
-  String? message;
+  String? messageOnChange;
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<QuerySnapshot>(
-      future: messages.get(),
+    return StreamBuilder<QuerySnapshot>(
+      stream: messages.snapshots(),
       builder: (context, snapshot) {
         //testing data retrieval when it DocumentSnapshot
         // print(snapshot.data!['DateTime']);
@@ -79,7 +79,7 @@ class ChatScreen extends StatelessWidget {
                       ChatController.clear();
                     },
                     onChanged: (value) {
-                      message = value;
+                      messageOnChange = value;
                     },
                     decoration: InputDecoration(
                         hintText: 'Send Message',
@@ -102,7 +102,7 @@ class ChatScreen extends StatelessWidget {
                         suffixIcon: IconButton(
                           onPressed: () {
                             messages.add({
-                              'message': message,
+                              'message': messageOnChange,
                               'DateTime': messageDateTime,
                             });
 
