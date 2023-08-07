@@ -14,9 +14,6 @@ class ChatScreen extends StatelessWidget {
   CollectionReference messages =
       FirebaseFirestore.instance.collection(kMessageCollection);
 
-  var messageDateTime =
-      DateFormat('yyyy-MM-dd – hh:mm a').format(DateTime.now());
-
   static String id = 'ChatScreen';
 
   String? messageOnChange;
@@ -24,7 +21,7 @@ class ChatScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-      stream: messages.snapshots(),
+      stream: messages.orderBy('DateTime').snapshots(),
       builder: (context, snapshot) {
         //testing data retrieval when it DocumentSnapshot
         // print(snapshot.data!['DateTime']);
@@ -73,7 +70,7 @@ class ChatScreen extends StatelessWidget {
                     onFieldSubmitted: (data) {
                       messages.add({
                         'message': data,
-                        'DateTime': messageDateTime,
+                        'DateTime': DateTime.now(),
                       });
 
                       ChatController.clear();
@@ -103,7 +100,7 @@ class ChatScreen extends StatelessWidget {
                           onPressed: () {
                             messages.add({
                               'message': messageOnChange,
-                              'DateTime': messageDateTime,
+                              'DateTime': DateTime.now(),
                             });
 
                             ChatController.clear();
