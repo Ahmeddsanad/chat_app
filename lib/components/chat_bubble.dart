@@ -1,7 +1,14 @@
 import 'package:chat_app/constant.dart';
+import 'package:chat_app/models/message_model.dart';
 import 'package:flutter/material.dart';
 
-Widget ChatBubble() => Align(
+class ChatBubble extends StatelessWidget {
+  ChatBubble({super.key, required this.message});
+
+  Message message;
+  @override
+  Widget build(BuildContext context) {
+    return Align(
       alignment: Alignment.centerLeft,
       child: Container(
         padding: EdgeInsets.only(
@@ -19,10 +26,12 @@ Widget ChatBubble() => Align(
               topLeft: Radius.circular(32),
             )),
         child: Text(
-          'hello im ahmed what about u?',
+          '${message.message}',
           style: TextStyle(
             color: Colors.white,
           ),
         ),
       ),
     );
+  }
+}
