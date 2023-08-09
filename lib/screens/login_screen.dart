@@ -128,7 +128,8 @@ class _LoginScreenState extends State<LoginScreen> {
                               password: password!,
                             );
 
-                            Navigator.pushNamed(context, ChatScreen.id);
+                            Navigator.pushNamed(context, ChatScreen.id,
+                                arguments: email);
 
                             // print('login success');
                           } on FirebaseAuthException catch (e) {

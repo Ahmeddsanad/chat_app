@@ -22,6 +22,8 @@ class ChatScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var email = ModalRoute.of(context)!.settings.arguments;
+
     return StreamBuilder<QuerySnapshot>(
       stream: messages.orderBy('DateTime', descending: true).snapshots(),
       builder: (context, snapshot) {
@@ -80,6 +82,7 @@ class ChatScreen extends StatelessWidget {
                         messages.add({
                           'message': data,
                           'DateTime': DateTime.now(),
+                          'id': email,
                         });
 
                         scrollController.animateTo(
@@ -119,6 +122,7 @@ class ChatScreen extends StatelessWidget {
                             messages.add({
                               'message': messageOnChange,
                               'DateTime': DateTime.now(),
+                              'id': email,
                             });
 
                             scrollController.animateTo(
