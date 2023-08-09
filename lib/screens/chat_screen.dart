@@ -11,6 +11,8 @@ class ChatScreen extends StatelessWidget {
 
   TextEditingController ChatController = TextEditingController();
 
+  ScrollController scrollController = ScrollController();
+
   CollectionReference messages =
       FirebaseFirestore.instance.collection(kMessageCollection);
 
@@ -21,7 +23,7 @@ class ChatScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-      stream: messages.orderBy('DateTime').snapshots(),
+      stream: messages.orderBy('DateTime', descending: true).snapshots(),
       builder: (context, snapshot) {
         //testing data retrieval when it DocumentSnapshot
         // print(snapshot.data!['DateTime']);
@@ -54,7 +56,11 @@ class ChatScreen extends StatelessWidget {
               children: [
                 Expanded(
                   child: ListView.builder(
+                    reverse: true,
+                    controller: scrollController,
                     itemCount: MessagesList.length,
+                    keyboardDismissBehavior:
+                        ScrollViewKeyboardDismissBehavior.onDrag,
                     physics: const BouncingScrollPhysics(),
                     itemBuilder: (context, index) => SizedBox(
                       child: ChatBubble(
@@ -68,12 +74,24 @@ class ChatScreen extends StatelessWidget {
                   child: TextFormField(
                     controller: ChatController,
                     onFieldSubmitted: (data) {
-                      messages.add({
-                        'message': data,
-                        'DateTime': DateTime.now(),
-                      });
+                      if (data.isEmpty) {
+                        FocusManager.instance.primaryFocus?.unfocus();
+                      } else {
+                        messages.add({
+                          'message': data,
+                          'DateTime': DateTime.now(),
+                        });
 
-                      ChatController.clear();
+                        scrollController.animateTo(
+                          0,
+                          duration: const Duration(
+                            milliseconds: 200,
+                          ),
+                          curve: Curves.easeInOut,
+                        );
+
+                        ChatController.clear();
+                      }
                     },
                     onChanged: (value) {
                       messageOnChange = value;
@@ -103,6 +121,14 @@ class ChatScreen extends StatelessWidget {
                               'DateTime': DateTime.now(),
                             });
 
+                            scrollController.animateTo(
+                              0,
+                              duration: const Duration(
+                                milliseconds: 200,
+                              ),
+                              curve: Curves.easeInOut,
+                            );
+
                             ChatController.clear();
                           },
                           icon: const Icon(
@@ -116,10 +142,10 @@ class ChatScreen extends StatelessWidget {
             ),
           );
         } else {
-          return ModalProgressHUD(
-            inAsyncCall: false,
-            child: Text(
-              'Loading',
+          return const Scaffold(
+            body: ModalProgressHUD(
+              inAsyncCall: true,
+              child: Center(child: Text('Loading...')),
             ),
           );
         }
