@@ -65,9 +65,11 @@ class ChatScreen extends StatelessWidget {
                         ScrollViewKeyboardDismissBehavior.onDrag,
                     physics: const BouncingScrollPhysics(),
                     itemBuilder: (context, index) => SizedBox(
-                      child: ChatBubble(
-                        message: MessagesList[index],
-                      ),
+                      child: MessagesList[index].id == email
+                          ? ChatBubble(
+                              message: MessagesList[index],
+                            )
+                          : ChatBubble2(message: MessagesList[index]),
                     ),
                   ),
                 ),

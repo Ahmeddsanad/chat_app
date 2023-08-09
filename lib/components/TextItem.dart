@@ -5,12 +5,17 @@ Widget TextItem({
   TextEditingController? controller,
   Function(String)? onChanged,
   required String? Function(String?)? validator,
+  bool isObscureText = false,
+  bool isPasswordField = false,
+  Widget? SuffixIcon,
 }) {
   return TextFormField(
+    obscureText: isObscureText,
     onChanged: onChanged,
     validator: validator,
     controller: controller,
     decoration: InputDecoration(
+      suffixIcon: SuffixIcon,
       focusedErrorBorder: OutlineInputBorder(
         borderSide: const BorderSide(
           color: Colors.white,

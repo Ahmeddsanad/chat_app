@@ -30,6 +30,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   bool isLoading = false;
 
+  bool isPassword = true;
+
   GlobalKey<FormState> formKey = GlobalKey();
 
   @override
@@ -99,6 +101,25 @@ class _LoginScreenState extends State<LoginScreen> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 24.0),
                     child: TextItem(
+                      SuffixIcon: isPassword
+                          ? IconButton(
+                              color: Colors.white,
+                              onPressed: () {
+                                setState(() {
+                                  isPassword = !isPassword;
+                                });
+                              },
+                              icon: Icon(Icons.remove_red_eye))
+                          : IconButton(
+                              color: Colors.grey,
+                              onPressed: () {
+                                setState(() {
+                                  isPassword = !isPassword;
+                                });
+                              },
+                              icon: Icon(Icons.remove_red_eye),
+                            ),
+                      isObscureText: isPassword,
                       onChanged: (data) {
                         password = data;
                       },

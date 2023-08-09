@@ -29,6 +29,8 @@ class ChatBubble extends StatelessWidget {
           '${message.message}',
           style: TextStyle(
             color: Colors.white,
+            fontSize: 16.0,
+            fontWeight: FontWeight.bold,
           ),
         ),
       ),
@@ -43,28 +45,34 @@ class ChatBubble2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Align(
-      alignment: Alignment.centerLeft,
-      child: Container(
-        padding: const EdgeInsets.only(
-          left: 16,
-          top: 32,
-          bottom: 32,
-          right: 32,
-        ),
-        margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-        decoration: const BoxDecoration(
-            color: kSecondaryColor,
-            borderRadius: BorderRadius.only(
-              bottomRight: Radius.circular(32),
-              topRight: Radius.circular(32),
-              topLeft: Radius.circular(32),
-            )),
-        child: Text(
-          '${message.message}',
-          style: const TextStyle(
-            color: Colors.white,
+      alignment: Alignment.centerRight,
+      child: Stack(
+        children: [
+          Container(
+            padding: const EdgeInsets.only(
+              left: 16,
+              top: 32,
+              bottom: 32,
+              right: 32,
+            ),
+            margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+            decoration: const BoxDecoration(
+                color: kSecondaryColor,
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(32),
+                  topRight: Radius.circular(32),
+                  topLeft: Radius.circular(32),
+                )),
+            child: Text(
+              '${message.message}',
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 16.0,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           ),
-        ),
+        ],
       ),
     );
   }
