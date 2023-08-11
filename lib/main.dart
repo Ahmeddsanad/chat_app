@@ -25,7 +25,7 @@ class ScholarChatApp extends StatelessWidget {
         LoginScreen.id: (context) => LoginScreen(),
         RegisterScreen.id: (context) => RegisterScreen(),
         ChatScreen.id: (context) => ChatScreen(),
-        SplashScreen.id: (context) => SplashScreen(),
+        SplashScreen.id: (context) => const SplashScreen(),
       },
       debugShowCheckedModeBanner: false,
       initialRoute: 'SplashScreen',

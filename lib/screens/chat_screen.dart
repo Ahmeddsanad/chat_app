@@ -20,8 +20,12 @@ class ChatScreen extends StatelessWidget {
 
   String? messageOnChange;
 
+  DateTime currentTime = DateTime.now();
+
   @override
   Widget build(BuildContext context) {
+    String formattedTime = DateFormat('hh:mm a').format(DateTime.now());
+
     var email = ModalRoute.of(context)!.settings.arguments;
 
     return StreamBuilder<QuerySnapshot>(
@@ -85,6 +89,7 @@ class ChatScreen extends StatelessWidget {
                           'message': data,
                           'DateTime': DateTime.now(),
                           'id': email,
+                          'formattedTime': formattedTime
                         });
 
                         scrollController.animateTo(
@@ -125,6 +130,7 @@ class ChatScreen extends StatelessWidget {
                               'message': messageOnChange,
                               'DateTime': DateTime.now(),
                               'id': email,
+                              'formattedTime': formattedTime
                             });
 
                             scrollController.animateTo(
